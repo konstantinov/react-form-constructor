@@ -12,9 +12,9 @@ const store = createStore(RootReducer);
 const App = () =>
     <Provider store={store}>
         <BrowserRouter>
-        <Switch>
-            <Route path="/" exact component={FormsListPage} />
-        </Switch></BrowserRouter>
+            <Switch>
+                <Route path="/" exact component={FormsListPage} />
+            </Switch></BrowserRouter>
     </Provider>
 ;
 
