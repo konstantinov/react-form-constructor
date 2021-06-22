@@ -14,7 +14,8 @@ const App = () =>
         <BrowserRouter>
             <Switch>
                 <Route path="/" exact component={FormsListPage} />
-            </Switch></BrowserRouter>
+            </Switch>
+        </BrowserRouter>
     </Provider>
 ;
 
