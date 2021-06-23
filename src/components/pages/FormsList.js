@@ -3,7 +3,7 @@ import Sidebar from '~/components/blocks/Sidebar';
 import List from '~/components/atoms/List';
 import { useDispatch, useSelector } from 'react-redux';
 import { downloadForms } from '~/actions/forms';
-import { getFormsDatesGroups } from '~/selectors/forms';
+import { getFormsDatesGroups, getGroupForms, getForms } from '~/selectors/forms';
 import { useParams} from 'react-router-dom';
 import { push } from 'connected-react-router';
 import Header from '~/components/atoms/Header';
@@ -22,7 +22,7 @@ const FormsList = () => {
 
     const showGroup = (title) => dispatch(push(`/dates/${encodeURIComponent(title)}`));
     const groups = useSelector(getFormsDatesGroups);
-    // const forms = useSelector(group ? getGroupForms(group) : getForms);
+    const forms = useSelector(group ? getGroupForms(group) : getForms);
 
     return <Sidebar content={
         <>
@@ -37,7 +37,18 @@ const FormsList = () => {
                     >{currentGroup.title}</span>)
             } />
         </>
-    }>list</Sidebar>;
+    }>
+        <Sidebar
+            theme="inner"
+            content={
+                <List items={
+                    forms.map(form =>
+                        <span css={styles.menuItem} key={form.id} theme="inner">{form.name}</span>
+                    )
+                }></List>
+            }
+        ></Sidebar>
+    </Sidebar>;
 };
 
 export default FormsList;

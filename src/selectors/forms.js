@@ -31,3 +31,9 @@ const getDateGroup = (date) => {
             difference < 3 ? 'Couple days ago' :
                 difference < 7 ? 'This week' : format(date, 'd MMM yy');
 };
+
+export const getGroupForms = (group) =>
+    createSelector(
+        getFormsGroupByDate,
+        (grouped) => grouped[group] ?? []
+    );

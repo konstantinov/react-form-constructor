@@ -7,4 +7,10 @@ export const menuItem = css`
   margin: 0 -20px 0 -40px;
   padding: 0 20px 0 40px;
   ${props => props.active ? css`background: #1B87FF` : ''}
+
+  ${props => props.theme === 'inner' ? css`
+    &:hover {
+      background: #ECECEC;
+    }
+  ` : ''}
 `;
