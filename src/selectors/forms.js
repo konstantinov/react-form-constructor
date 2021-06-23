@@ -27,6 +27,7 @@ const getDateGroup = (date) => {
     const difference = differenceInCalendarDays(today, date);
 
     return difference < 1 ? 'Today' :
-        difference < 3 ? 'Couple days ago' :
-            difference < 7 ? 'This week' : format(date, 'd MMM yy');
+        difference === 1 ? 'Yesterday' :
+            difference < 3 ? 'Couple days ago' :
+                difference < 7 ? 'This week' : format(date, 'd MMM yy');
 };

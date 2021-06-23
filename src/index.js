@@ -2,29 +2,20 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Route, Switch, BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import { createStore, applyMiddleware } from 'redux';
-import RootReducer from '~/reducers';
-import createSagaMiddleware from 'redux-saga';
-import sagas from '~/sagas';
-
+import configureStore, { history } from '~/store';
 import FormsListPage from '~/components/pages/FormsList';
+import { ConnectedRouter } from 'connected-react-router';
 
-const sagaMiddleware = createSagaMiddleware();
-
-const store = createStore(
-    RootReducer,
-    applyMiddleware(sagaMiddleware)
-);
-
-sagaMiddleware.run(sagas);
+const store = configureStore();
 
 const App = () =>
     <Provider store={store}>
-        <BrowserRouter>
+        <ConnectedRouter history={history}>
             <Switch>
                 <Route path="/" exact component={FormsListPage} />
+                <Route path="/dates/:group" component={FormsListPage} />
             </Switch>
-        </BrowserRouter>
+        </ConnectedRouter>
     </Provider>
 ;
 
