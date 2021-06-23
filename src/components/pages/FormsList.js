@@ -1,11 +1,14 @@
 import React, { useEffect } from 'react';
 import Sidebar from '~/components/blocks/Sidebar';
-import List from '~/components/blocks/List';
+import List from '~/components/atoms/List';
 import { useDispatch, useSelector } from 'react-redux';
 import { downloadForms } from '~/actions/forms';
 import { getFormsDatesGroups } from '~/selectors/forms';
 import { useParams} from 'react-router-dom';
 import { push } from 'connected-react-router';
+import Header from '~/components/atoms/Header';
+
+import * as styles from '~/styles/FormsList.styles';
 
 const FormsList = () => {
     const dispatch = useDispatch();
@@ -19,11 +22,21 @@ const FormsList = () => {
 
     const showGroup = (title) => dispatch(push(`/dates/${encodeURIComponent(title)}`));
     const groups = useSelector(getFormsDatesGroups);
+    // const forms = useSelector(group ? getGroupForms(group) : getForms);
 
     return <Sidebar content={
-        <List items={
-            groups.map(group => <span key={group.title} onClick={(e) => showGroup(group.title)}>{group.title}</span>)
-        } />
+        <>
+            <Header onClick={() => dispatch(push('/'))}>Forms</Header>
+            <List items={
+                groups.map(currentGroup =>
+                    <span
+                        key={currentGroup.title}
+                        onClick={() => showGroup(currentGroup.title)}
+                        css={styles.menuItem}
+                        active={group === currentGroup.title}
+                    >{currentGroup.title}</span>)
+            } />
+        </>
     }>list</Sidebar>;
 };
 
