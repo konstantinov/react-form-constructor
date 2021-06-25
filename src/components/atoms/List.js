@@ -1,9 +1,10 @@
 import React from 'react';
 
+import * as styles from '~/styles/List.styles';
 
-const List = ({ items }) => <ul>{items.map(
+const List = ({ items, style }) => <ul css={style}>{items.map(
     (item, index) =>
         <li key={index}>{item}</li>
 )}</ul>;
 
-export default List;
+export const SidebarList = (props) => <List {...props} style={styles.simpleList} />;

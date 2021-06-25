@@ -14,13 +14,6 @@ export const menu = css`
         ` }
     font: bold 12px sans-serif;
     padding: 20px;
-
-    ul {
-        list-style: none;
-        margin: 0;
-        padding: 0;
-        margin-left: 20px;
-    }
 `;
 
 export const container = css`
