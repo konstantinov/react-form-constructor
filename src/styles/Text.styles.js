@@ -1,11 +1,11 @@
 import { css } from 'styled-components';
 
 export const sidebarHeader = css`
-    cursor: pointer;
+    ${ props => props.onClick ? css`cursor: pointer;` : '' }
     font: bold 16px sans-serif;
-    color: #fff;
     margin: 20px 0;
     display: block;
+    flex: 1;
 `;
 
 export const sidebarListItem = css`

@@ -13,3 +13,5 @@ const IconButton = ({ onClick, text, icon, style}) => (
 );
 
 export const WhiteButton = (props) => <IconButton {...props} style={styles.whiteButton } />;
+
+export const TinyButton = ({ text, onClick }) => <div onClick={onClick} css={styles.tinyButton}>{text}</div>;

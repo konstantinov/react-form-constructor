@@ -26,3 +26,8 @@ export const whiteButton = css`
     color: #027AFF;
     background: #fff;
 `;
+
+export const tinyButton = css`
+    flex: 0;
+    cursor: pointer;
+`;
