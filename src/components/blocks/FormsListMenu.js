@@ -5,6 +5,8 @@ import { getFormsDatesGroups} from '~/selectors/forms';
 import { WhiteButton } from '~/components/atoms/Buttons';
 import { SidebarList } from '~/components/atoms/List';
 import { SidebarHeader, SidebarListItem } from '~/components/atoms/Text';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { useParams } from 'react-router-dom';
 
 const FormsListMenu = () => {
@@ -16,7 +18,7 @@ const FormsListMenu = () => {
     const showGroup = (title) => dispatch(push(`/dates/${encodeURIComponent(title)}`));
 
     return <>
-        <WhiteButton text="Create" icon="+" onClick={() => dispatch(push('/create'))} />
+        <WhiteButton text="Create" icon={<FontAwesomeIcon icon={faPlus} />} onClick={() => dispatch(push('/create'))} />
         <SidebarHeader onClick={() => dispatch(push('/'))}>Forms</SidebarHeader>
         <SidebarList items={
             groups.map(currentGroup =>
