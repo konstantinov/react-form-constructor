@@ -22,3 +22,22 @@ export const innerTheme = css`
         background: #ECECEC;
     }
 `;
+
+export const control = css`
+    border: dashed 1px white;
+    text-align: center;
+    display: block;
+    border-radius: 15px;
+    line-height: 30px;
+    cursor: pointer;
+    margin: 15px 0;
+    position: relative;
+
+    &:before {
+        content: '↨';
+        position: absolute;
+        left: 15px;
+        top: -1px;
+        font-size: 200%;
+    }
+`;

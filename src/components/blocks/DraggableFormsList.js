@@ -5,6 +5,7 @@ import { useDrag } from 'react-dnd';
 import { getForms } from '~/selectors/forms';
 import { TinyButton} from '~/components/atoms/Buttons';
 import { SidebarHeader, SidebarListItem } from '~/components/atoms/Text';
+import { push } from 'connected-react-router';
 
 import * as styles from '~/styles/DraggableFormsList.styles';
 

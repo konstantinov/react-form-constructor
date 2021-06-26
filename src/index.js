@@ -16,6 +16,7 @@ const App = () =>
                 <Route path="/" exact component={FormsListPage} />
                 <Route path="/dates/:group" component={FormsListPage} />
                 <Route path="/edit/:id" component={FormEditPage} />
+                <Route path="/create" component={FormEditPage} />
             </Switch>
         </ConnectedRouter>
     </Provider>

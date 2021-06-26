@@ -11,7 +11,7 @@ export const headerRow = css`
 
 export const container = css`
     margin: -20px -20px 0;
-    padding: 20px 20px 0;
+    padding: 20px;
     background: #F6F6F6;
     color: #000 !important;
     border-right: 1px solid #cdcdcd
