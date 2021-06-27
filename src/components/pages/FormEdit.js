@@ -5,6 +5,7 @@ import { downloadForms } from '~/actions/forms';
 import { useParams} from 'react-router-dom';
 import DraggableFormsList from '~/components/blocks/DraggableFormsList';
 import DraggableControlsList from '~/components/blocks/DraggableControlsList';
+import FormContent from '~/components/blocks/FormContent';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 
@@ -25,7 +26,7 @@ const FormEdit = () => {
                 <DraggableControlsList />
             </>
         }>
-        formContent
+            <FormContent id={id} />
         </Sidebar>
     </DndProvider>;
 };

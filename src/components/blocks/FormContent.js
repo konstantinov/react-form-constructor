@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { getOr, set } from 'lodash/fp';
+import { getOr, set, update, reject } from 'lodash/fp';
 import { useDrop } from 'react-dnd';
 import { getForm } from '~/selectors/forms';
 import FormContentItem from '~/components/blocks/FormContentItem';
@@ -24,12 +24,16 @@ const FormContent = ({ id }) => {
         ];
 
         setLocalForm(set('content', newContent, localForm));
-    }, [ setLocalForm ]);
+    }, [ localForm ]);
+
+    const handleRemove = useCallback((item) => {
+        setLocalForm(update('content', reject((control) => control == item), localForm));
+    }, [ localForm ]);
 
     return <div css={styles.container}>
-        {localForm && localForm.content.map((contentItem, index) => <div key={index} >
+        {localForm && localForm.content.map((contentItem, index) => <div key={index}>
             <ContentDropZone index={index} onDrop={handleDrop} />
-            <FormContentItem item={contentItem} index={index} />
+            <FormContentItem item={contentItem} index={index} onRemove={handleRemove} />
         </div>)}
         <ContentDropZone index={localForm?.content.length ?? 0} onDrop={handleDrop} />
     </div>;

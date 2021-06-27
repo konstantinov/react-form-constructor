@@ -1,6 +1,7 @@
 import React from 'react';
 import { useDrag } from 'react-dnd';
-import { SidebarHeader, SidebarControl } from '~/components/atoms/Text';
+import { SidebarHeader } from '~/components/atoms/Text';
+import { BlueControlButton } from '~/components/atoms/Buttons';
 
 const DraggableControlsList = () => {
 
@@ -22,7 +23,7 @@ const Draggable = ({ control }) => {
         item: control,
     }));
 
-    return <SidebarControl ref={drag}>{control.name}</SidebarControl>;
+    return <BlueControlButton ref={drag} text={control.name} />;
 };
 
 export default DraggableControlsList;

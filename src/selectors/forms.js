@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 
-import { getOr, groupBy, toPairs, sortBy, map, compose } from 'lodash/fp';
+import { getOr, groupBy, toPairs, sortBy, map, compose, find } from 'lodash/fp';
 import { differenceInCalendarDays, format } from 'date-fns';
 
 export const getForms = state => getOr([], 'forms', state);
@@ -8,6 +8,12 @@ export const getForms = state => getOr([], 'forms', state);
 export const getFormsGroupByDate = createSelector(
     getForms,
     groupBy(({ created }) => getDateGroup(created))
+);
+
+export const getForm = (id) => createSelector(
+    getForms,
+    find(({ _id }) => _id.toString() === id)
+
 );
 
 export const getFormsDatesGroups = createSelector(

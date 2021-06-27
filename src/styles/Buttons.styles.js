@@ -30,6 +30,7 @@ export const whiteButton = css`
 export const tinyButton = css`
     flex: 0;
     cursor: pointer;
+    padding: 0 3px;
 `;
 
 export const control = css`

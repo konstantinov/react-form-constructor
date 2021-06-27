@@ -19,4 +19,4 @@ export const WhiteButton = (props) => <IconButton {...props} style={styles.white
 export const BlueControlButton = forwardRef((props, ref) => <IconButton {...props} ref={ref} style={styles.control} icon={
     <FontAwesomeIcon icon={faArrowsAlt} />} />);
 
-export const TinyButton = ({ text, onClick }) => <div onClick={onClick} css={styles.tinyButton}>{text}</div>;
+export const TinyButton = forwardRef( ({ text, onClick }, ref) => <div ref={ref} onClick={onClick} css={styles.tinyButton}>{text}</div> );
