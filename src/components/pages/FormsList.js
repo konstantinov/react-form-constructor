@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import Sidebar from '~/components/blocks/Sidebar';
+import DoubleSidebar from '~/components/templates/DoubleSidebar';
 import { useDispatch } from 'react-redux';
 import { downloadForms } from '~/actions/forms';
 import { useParams} from 'react-router-dom';
@@ -15,16 +15,10 @@ const FormsList = () => {
 
     const { group } = useParams();
 
-    return <Sidebar content={
-        <FormsListMenu />
-    }>
-        <Sidebar
-            theme="inner"
-            content={
-                <FormsListBlock group={group} />
-            }
-        ></Sidebar>
-    </Sidebar>;
+    return <DoubleSidebar
+        leftSidebar={<FormsListMenu />}
+        rightSidebar={<FormsListBlock group={group} />}
+    />;
 };
 
 export default FormsList;
