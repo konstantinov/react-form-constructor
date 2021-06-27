@@ -33,7 +33,12 @@ const FormContent = ({ id }) => {
     return <div css={styles.container}>
         {localForm && localForm.content.map((contentItem, index) => <div key={index}>
             <ContentDropZone index={index} onDrop={handleDrop} />
-            <FormContentItem item={contentItem} index={index} onRemove={handleRemove} />
+            <FormContentItem
+                item={contentItem}
+                index={index}
+                onRemove={handleRemove}
+                onCopy={handleDrop}
+            />
         </div>)}
         <ContentDropZone index={localForm?.content.length ?? 0} onDrop={handleDrop} />
     </div>;
