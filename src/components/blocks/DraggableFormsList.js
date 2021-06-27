@@ -26,7 +26,7 @@ const DraggableFormsList = () => {
 };
 
 const Draggable = ({ form }) => {
-    const [{ isDragging }, drag] = useDrag(() => ({
+    const [, drag] = useDrag(() => ({
         type: 'box',
         item: form,
     }));

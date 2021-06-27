@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { getOr, set, update, reject } from 'lodash/fp';
+import { getOr, set, update, reject, compose } from 'lodash/fp';
 import { useDrop } from 'react-dnd';
 import { getForm } from '~/selectors/forms';
 import FormContentItem from '~/components/blocks/FormContentItem';
@@ -14,20 +14,24 @@ const FormContent = ({ id }) => {
 
     useEffect(() => {
         form && setLocalForm(form);
-    }, [form]);
+    }, [ form ]);
 
     const handleDrop = useCallback((item, index) => {
+        const content = compose(
+            reject((control) => control === item),
+            getOr([], 'content')
+        )(localForm);
         const newContent = [
-            ...getOr([], 'content', localForm).slice(0, index),
-            item,
-            ...getOr([], 'content', localForm).slice(index)
+            ...content.slice(0, index),
+            { ...item },
+            ...content.slice(index)
         ];
 
         setLocalForm(set('content', newContent, localForm));
     }, [ localForm ]);
 
     const handleRemove = useCallback((item) => {
-        setLocalForm(update('content', reject((control) => control == item), localForm));
+        setLocalForm(update('content', reject((control) => control === item), localForm));
     }, [ localForm ]);
 
     return <div css={styles.container}>
