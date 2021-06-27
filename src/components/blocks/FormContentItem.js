@@ -32,7 +32,7 @@ const FormContentItem = ({ item, index, onRemove, onEdit, onCopy }) => {
         <Control item={item} />
         <div className="overlay">
             <TinyButton text={<FontAwesomeIcon icon={faArrowsAlt} />} onMouseDown={startDrag} />
-            <TinyButton text={<FontAwesomeIcon icon={faCopy} onClick={() => onCopy(item, index)} />} />
+            <TinyButton text={<FontAwesomeIcon icon={faCopy} onClick={() => onCopy({ ...item }, index)} />} />
             <TinyButton text={<FontAwesomeIcon icon={faEdit} onClick={onEdit} />} />
             <TinyButton text={<FontAwesomeIcon icon={faTrash} onClick={() => onRemove(item)} />} />
         </div>
