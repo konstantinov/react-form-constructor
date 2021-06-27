@@ -36,7 +36,7 @@ const FormContent = ({ id }) => {
 
     return <div css={styles.container}>
         {localForm && localForm.content.map((contentItem, index) => <div key={index}>
-            <ContentDropZone index={index} onDrop={handleDrop} />
+            <ContentDropZone index={index} onDrop={handleDrop} item={contentItem} />
             <FormContentItem
                 item={contentItem}
                 index={index}
@@ -49,16 +49,18 @@ const FormContent = ({ id }) => {
 };
 
 
-const ContentDropZone = ({ index, onDrop }) => {
-    const [{ isOver }, drop] = useDrop({
+const ContentDropZone = ({ index, onDrop, item }) => {
+    const [{ isOver, canDrop }, drop] = useDrop({
         accept: 'box',
         drop: (item) => onDrop(item, index),
         collect: (monitor) => ({
             isOver: monitor.isOver(),
+            canDrop: monitor.canDrop(),
         }),
+        canDrop: (dropItem) => !item || dropItem !== item
     });
 
-    return <div ref={drop} css={styles.dropZone} isOver={isOver} />;
+    return <div ref={drop} css={styles.dropZone} isOver={isOver && canDrop} />;
 
 };
 
