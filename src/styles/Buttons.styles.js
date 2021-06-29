@@ -27,6 +27,18 @@ export const whiteButton = css`
     background: #fff;
 `;
 
+export const blueButton = css`
+    background: #027AFF;
+    border-radius: 4px !important;
+    line-height: 30px;
+    font-size: 14px;
+    color: #fff;
+
+    &:hover {
+        background: #229AFF;
+    }
+`;
+
 export const tinyButton = css`
     flex: 0;
     cursor: pointer;

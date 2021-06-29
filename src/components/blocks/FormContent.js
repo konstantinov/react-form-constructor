@@ -5,6 +5,9 @@ import { useDrop } from 'react-dnd';
 import { getForm } from '~/selectors/forms';
 import FormContentItem from '~/components/blocks/FormContentItem';
 import Dialog from '~/components/blocks/Dialog';
+import { Row, Col } from '~/components/atoms/Grid';
+import { EditorHeader } from '~/components/atoms/Text';
+import { BlueButton } from '~/components/atoms/Buttons';
 
 import * as styles from '~/styles/FormContent.styles';
 
@@ -54,7 +57,14 @@ const FormContent = ({ id }) => {
             />
         </div>)}
         <ContentDropZone index={localForm?.content.length ?? 0} onDrop={handleDrop} />
-        { isEditVisible && <Dialog>111</Dialog> }
+        { isEditVisible && (
+            <Dialog>
+                <FormContentItemsEdit
+                    item={editItem}
+                    onCancel={() => setIsEditVisible(false)}
+                />
+            </Dialog>
+        ) }
     </div>;
 };
 
@@ -72,6 +82,27 @@ const ContentDropZone = ({ index, onDrop, item }) => {
 
     return <div ref={drop} css={styles.dropZone} isOver={isOver && canDrop} />;
 
+};
+
+const FormContentItemsEdit = ({ item, onSave, onCancel }) => {
+    const [ name, setName ] = useState(item.name);
+    const [ lable, setLabel ] = useState(item.label);
+    return <>
+        <Row>
+            <Col size={6}>
+                <EditorHeader>Name</EditorHeader>
+            </Col>
+            <Col size={6}>
+                <EditorHeader>Label</EditorHeader>
+            </Col>
+        </Row>
+        <Row>
+            <Col size={8} />
+            <Col size={4}>
+                <BlueButton text="Save" />
+            </Col>
+        </Row>
+    </>;
 };
 
 

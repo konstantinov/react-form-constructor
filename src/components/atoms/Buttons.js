@@ -10,12 +10,13 @@ const IconButton = forwardRef(({ onClick, text, icon, style}, ref) => (
         css={[ style, styles.iconButton ]}
         onClick={onClick}
     >
-        <div css={styles.icon}>{icon}</div>
+        { icon && <div css={styles.icon}>{icon}</div> }
         <div css={styles.text}>{text}</div>
     </div>
 ));
 
 export const WhiteButton = (props) => <IconButton {...props} style={styles.whiteButton } />;
+export const BlueButton = (props) => <IconButton {...props} style={styles.blueButton } />;
 export const BlueControlButton = forwardRef((props, ref) => <IconButton {...props} ref={ref} style={styles.control} icon={
     <FontAwesomeIcon icon={faArrowsAlt} />} />);
 

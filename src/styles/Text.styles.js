@@ -28,3 +28,10 @@ export const editorText = css`
     line-height: 30px;
     display: block;
 `;
+
+export const editorHeader = css`
+    font: normal 18px sans-serif;
+    line-height: 30px;
+    display: block;
+    font-weight: bold;
+`;

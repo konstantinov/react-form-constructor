@@ -10,3 +10,4 @@ export const SidebarListItem = (props) => <Text {...props} style={styles.sidebar
 export const InnerSidebarListItem = (props) => <Text {...props} style={[ styles.innerTheme, styles.sidebarListItem ]} />;
 
 export const EditorText = (props) => <Text {...props} style={styles.editorText} />;
+export const EditorHeader = (props) => <Text {...props} style={styles.editorHeader} />;
