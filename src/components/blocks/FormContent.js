@@ -4,6 +4,7 @@ import { getOr, set, update, reject, compose } from 'lodash/fp';
 import { useDrop } from 'react-dnd';
 import { getForm } from '~/selectors/forms';
 import FormContentItem from '~/components/blocks/FormContentItem';
+import Dialog from '~/components/blocks/Dialog';
 
 import * as styles from '~/styles/FormContent.styles';
 
@@ -11,6 +12,8 @@ import * as styles from '~/styles/FormContent.styles';
 const FormContent = ({ id }) => {
     const form = id ? useSelector(getForm(id)) : undefined;
     const [ localForm, setLocalForm ] = useState(form);
+    const [ isEditVisible, setIsEditVisible ] = useState(false);
+    const [ editItem, setEditItem ] = useState();
 
     useEffect(() => {
         form && setLocalForm(form);
@@ -30,6 +33,11 @@ const FormContent = ({ id }) => {
         setLocalForm(set('content', newContent, localForm));
     }, [ localForm ]);
 
+    const handleEdit = useCallback((item) => {
+        setEditItem(item);
+        setIsEditVisible(true);
+    });
+
     const handleRemove = useCallback((item) => {
         setLocalForm(update('content', reject((control) => control === item), localForm));
     }, [ localForm ]);
@@ -40,11 +48,13 @@ const FormContent = ({ id }) => {
             <FormContentItem
                 item={contentItem}
                 index={index}
+                onEdit={handleEdit}
                 onRemove={handleRemove}
                 onCopy={handleDrop}
             />
         </div>)}
         <ContentDropZone index={localForm?.content.length ?? 0} onDrop={handleDrop} />
+        { isEditVisible && <Dialog>111</Dialog> }
     </div>;
 };
 
