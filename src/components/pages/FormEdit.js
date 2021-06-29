@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import Sidebar from '~/components/blocks/Sidebar';
+import { Sidebar } from '~/components/atoms/Sidebar';
 import { useDispatch } from 'react-redux';
 import { downloadForms } from '~/actions/forms';
 import { useParams} from 'react-router-dom';

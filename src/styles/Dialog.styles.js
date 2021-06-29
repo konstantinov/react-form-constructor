@@ -12,3 +12,11 @@ export const container = css`
     border-radius: 4px;
     border: 1px solid #cdcdcd;
 `;
+export const overlay = css`
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: rgba(255,255,255,.5);
+    top: 0;
+    left: 0;
+`;

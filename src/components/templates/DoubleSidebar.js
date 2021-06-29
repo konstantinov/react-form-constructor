@@ -1,11 +1,10 @@
 import React from 'react';
-import Sidebar from '~/components/blocks/Sidebar';
+import { Sidebar, InnerSidebar } from '~/components/atoms/Sidebar';
 
 const DoubleSidebar = ({ leftSidebar, rightSidebar }) => <Sidebar content={leftSidebar}>
-    <Sidebar
-        theme="inner"
+    <InnerSidebar
         content={rightSidebar}
-    ></Sidebar>
+    ></InnerSidebar>
 </Sidebar>;
 
 export default DoubleSidebar;

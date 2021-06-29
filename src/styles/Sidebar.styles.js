@@ -3,15 +3,8 @@ import { css } from 'styled-components';
 export const menu = css`
     width: 220px;
     flex-grow: 0;
-    ${props => props.theme === 'root' ?
-        css`
-            background: #027AFF;
-            color: #fff;
-        ` :
-        css`
-            background: #F6F6F6;
-            color: #000;
-        ` }
+    background: #027AFF;
+    color: #fff;
     font: bold 12px sans-serif;
     padding: 20px;
 `;
@@ -27,5 +20,10 @@ export const content = css`
     overflow-x: hidden;
     overflow-y: auto;
     display: flex;
+`;
+
+export const innerStyle = css`
+    background: #F6F6F6;
+    color: #000;
 `;
 
