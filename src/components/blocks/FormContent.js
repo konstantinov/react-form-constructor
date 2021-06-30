@@ -105,8 +105,10 @@ const FormContentItemsEdit = ({ item, onSave, onCancel }) => {
             <Col size={6}> { item.type === 'text' ? <>
                 <EditorHeader>Text</EditorHeader>
                 <Input value={editItem.content} onChange={({ target: { value } }) => setEditItem(set('content', value, editItem))} />
-            </> :
-                <EditorHeader>Name</EditorHeader>}
+            </> : <>
+                <EditorHeader>Name</EditorHeader>
+                <Input value={editItem.name} onChange={({ target: { value } }) => setEditItem(set('name', value, editItem))} />
+            </>}
             </Col>
             <Col size={6}>
                 <EditorHeader>Label</EditorHeader>

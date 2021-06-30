@@ -9,7 +9,7 @@ const DraggableControlsList = () => {
         <SidebarHeader>Cell layout </SidebarHeader>
         <Draggable control={{ name: 'Table', type: 'table' }} />
         <SidebarHeader>Form components</SidebarHeader>
-        <Draggable control={{ name: 'Input', type: 'table' }} />
+        <Draggable control={{ name: 'Input', type: 'input' }} />
         <Draggable control={{ name: 'Checkbox', type: 'checkbox' }} />
         <Draggable control={{ name: 'File uploader', type: 'uploader' }} />
         <Draggable control={{ name: 'Text', type: 'text' }} />
