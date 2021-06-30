@@ -1,9 +1,8 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getOr, set, update, reject, compose, findIndex } from 'lodash/fp';
-import { useDrop } from 'react-dnd';
+import Content from '~/components/blocks/Content';
 import { getForm } from '~/selectors/forms';
-import FormContentItem from '~/components/blocks/FormContentItem';
 import Dialog from '~/components/blocks/Dialog';
 import { Row, Col } from '~/components/atoms/Grid';
 import { EditorHeader } from '~/components/atoms/Text';
@@ -67,18 +66,7 @@ const FormContent = ({ id }) => {
         dispatch(saveForm(localForm));
     }, [ localForm ]);
     return <div css={styles.container}>
-        {localForm && localForm.content.map((contentItem, index) => <div key={index}>
-            <ContentDropZone index={index} onDrop={handleDrop} item={contentItem} />
-            <FormContentItem
-                item={contentItem}
-                index={index}
-                onEdit={() => handleEdit(contentItem)}
-                onRemove={handleRemove}
-                onCopy={handleDrop}
-                onDragEnd={handleDestroyItem}
-            />
-        </div>)}
-        <ContentDropZone index={localForm?.content.length ?? 0} onDrop={handleDrop} />
+        { localForm && <Content content={localForm.content} onEdit={handleEdit} onDrop={handleDrop} onRemove={handleRemove} onDestroy={handleDestroyItem} /> }
         { isEditVisible && (
             <Dialog>
                 <FormContentItemsEdit
@@ -93,20 +81,7 @@ const FormContent = ({ id }) => {
 };
 
 
-const ContentDropZone = ({ index, onDrop, item }) => {
-    const [{ isOver, canDrop }, drop] = useDrop({
-        accept: 'box',
-        drop: (item) => onDrop(item, index),
-        collect: (monitor) => ({
-            isOver: monitor.isOver(),
-            canDrop: monitor.canDrop(),
-        }),
-        canDrop: (dropItem) => !item || dropItem !== item
-    });
 
-    return <div ref={drop} css={styles.dropZone} isOver={isOver && canDrop} />;
-
-};
 
 const FormContentItemsEdit = ({ item, onSave, onCancel }) => {
     const [ editItem, setEditItem ] = useState(item);
