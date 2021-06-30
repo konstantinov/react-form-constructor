@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getOr, set, update, reject, compose, findIndex } from 'lodash/fp';
 import { useDrop } from 'react-dnd';
 import { getForm } from '~/selectors/forms';
@@ -7,13 +7,15 @@ import FormContentItem from '~/components/blocks/FormContentItem';
 import Dialog from '~/components/blocks/Dialog';
 import { Row, Col } from '~/components/atoms/Grid';
 import { EditorHeader } from '~/components/atoms/Text';
-import { BlueButton } from '~/components/atoms/Buttons';
+import { BlueButton, PinnedSaveButton } from '~/components/atoms/Buttons';
 import { Input } from '~/components/atoms/Input';
+import { saveForm } from '~/actions/forms';
 
 import * as styles from '~/styles/FormContent.styles';
 
 
 const FormContent = ({ id }) => {
+    const dispatch = useDispatch();
     const form = id ? useSelector(getForm(id)) : undefined;
     const [ localForm, setLocalForm ] = useState(form);
     const [ isEditVisible, setIsEditVisible ] = useState(false);
@@ -56,6 +58,9 @@ const FormContent = ({ id }) => {
         setLocalForm(update('content', reject((control) => control === item), localForm));
     }, [ localForm ]);
 
+    const handleSaveForm = useCallback(() => {
+        dispatch(saveForm(localForm));
+    }, [ localForm ]);
     return <div css={styles.container}>
         {localForm && localForm.content.map((contentItem, index) => <div key={index}>
             <ContentDropZone index={index} onDrop={handleDrop} item={contentItem} />
@@ -77,6 +82,7 @@ const FormContent = ({ id }) => {
                 />
             </Dialog>
         ) }
+        <PinnedSaveButton onClick={handleSaveForm} text="Save" />
     </div>;
 };
 
@@ -101,7 +107,6 @@ const FormContentItemsEdit = ({ item, onSave, onCancel }) => {
 
     return <>
         <Row>
-
             <Col size={6}> { item.type === 'text' ? <>
                 <EditorHeader>Text</EditorHeader>
                 <Input value={editItem.content} onChange={({ target: { value } }) => setEditItem(set('content', value, editItem))} />

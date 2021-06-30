@@ -53,5 +53,21 @@ export const control = css`
     line-height: 30px;
     cursor: pointer;
     margin: 15px 0;
+`;
 
+export const pinnedSave = css`
+    position: fixed;
+    left:50%;
+    bottom: 50px;
+    height: 30px;
+    border-radius: 15px;
+    background: #027AFF;
+    line-height: 30px;
+    font-size: 14px;
+    color: #fff;
+    width: 150px;
+
+    &:hover {
+        background: #229AFF;
+    }
 `;

@@ -1,9 +1,10 @@
 import { all } from 'redux-saga/effects';
 
-import { downloadForms } from '~/sagas/forms';
+import { downloadFormsSaga, saveFormSaga } from '~/sagas/forms';
 
 export default function* sagas() {
     yield all([
-        downloadForms(),
+        downloadFormsSaga(),
+        saveFormSaga(),
     ]);
 }
