@@ -3,7 +3,7 @@ import { useDrag } from 'react-dnd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowsAlt, faCopy, faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 
-import { EditorText } from '~/components/atoms/Text';
+import { EditorText, EditorHeader } from '~/components/atoms/Text';
 
 import * as styles from '~/styles/FormContentItem.styles';
 import { TinyButton } from '~/components/atoms/Buttons';
@@ -29,6 +29,7 @@ const FormContentItem = ({ item, index, onRemove, onEdit, onCopy }) => {
     const Control = controlsMap[item.type];
 
     return <div css={styles.container} ref={drag} onMouseDown={() => setCanDrag(false)}>
+        { item.label && <EditorHeader>{item.label}</EditorHeader>}
         <Control item={item} />
         <div className="overlay">
             <TinyButton text={<FontAwesomeIcon icon={faArrowsAlt} />} onMouseDown={startDrag} />
