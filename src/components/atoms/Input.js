@@ -13,3 +13,10 @@ export const FileInput = ({ onChange, name, disabled }) => <div css={styles.file
         <input type="file" name={name} onChange={onChange} disabled={disabled} />
     </label>
 </div>;
+
+export const Checkbox = ({ onChange, checked, name, disabled, label }) => <div>
+    <label>
+        <input type="checkbox" name={name} checked={checked} onChange={onChange} disabled={disabled} />
+        {label}
+    </label>
+</div>;

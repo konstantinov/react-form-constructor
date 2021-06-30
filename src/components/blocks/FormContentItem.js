@@ -7,7 +7,7 @@ import { EditorText, EditorHeader } from '~/components/atoms/Text';
 
 import * as styles from '~/styles/FormContentItem.styles';
 import { TinyButton } from '~/components/atoms/Buttons';
-import { Input, FileInput } from '~/components/atoms/Input';
+import { Input, FileInput, Checkbox } from '~/components/atoms/Input';
 import { Divider } from '~/components/atoms/Divider';
 
 const TextItem = ({ item }) => <EditorText>{item.content || '(Empty text)'}</EditorText>;
@@ -28,14 +28,15 @@ const FormContentItem = ({ item, index, onRemove, onEdit, onCopy }) => {
         'text': TextItem,
         'input': Input,
         'divider': Divider,
-        'uploader': FileInput
+        'uploader': FileInput,
+        'checkbox': Checkbox,
     };
 
     const Control = controlsMap[item.type];
 
     return <div css={styles.container} ref={drag} onMouseDown={() => setCanDrag(false)}>
-        { item.label && <EditorHeader>{item.label}</EditorHeader>}
-        <Control item={item} disabled />
+        { item.label && item.type !== 'checkbox' && <EditorHeader>{item.label}</EditorHeader>}
+        <Control item={item} label={item.label} disabled />
         <div className="overlay">
             <TinyButton text={<FontAwesomeIcon icon={faArrowsAlt} />} onMouseDown={startDrag} />
             <TinyButton text={<FontAwesomeIcon icon={faCopy} onClick={() => onCopy({ ...item }, index)} />} />
