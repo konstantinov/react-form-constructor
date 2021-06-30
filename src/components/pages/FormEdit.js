@@ -22,7 +22,7 @@ const FormEdit = () => {
     return <DndProvider backend={HTML5Backend}>
         <Sidebar content={
             <>
-                <DraggableFormsList />
+                <DraggableFormsList rejectId={id} />
                 <DraggableControlsList />
             </>
         }>

@@ -1,9 +1,12 @@
 import { createSelector } from 'reselect';
 
-import { getOr, groupBy, toPairs, sortBy, map, compose, find } from 'lodash/fp';
+import { getOr, groupBy, toPairs, sortBy, map, compose, find, defaults } from 'lodash/fp';
 import { differenceInCalendarDays, format } from 'date-fns';
 
-export const getForms = state => getOr([], 'forms', state);
+export const getForms = state => compose(
+    map(defaults({ name: '(empty)'})),
+    getOr([], 'forms'),
+)(state);
 
 export const getFormsGroupByDate = createSelector(
     getForms,

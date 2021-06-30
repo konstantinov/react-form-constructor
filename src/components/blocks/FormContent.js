@@ -16,20 +16,17 @@ import * as styles from '~/styles/FormContent.styles';
 
 const FormContent = ({ id }) => {
     const dispatch = useDispatch();
-    const form = id ? useSelector(getForm(id)) : undefined;
+    const form = useSelector(getForm(id));
     const [ localForm, setLocalForm ] = useState(form);
     const [ isEditVisible, setIsEditVisible ] = useState(false);
     const [ editItem, setEditItem ] = useState();
 
     useEffect(() => {
-        form && setLocalForm(form);
-    }, [ form ]);
+        setLocalForm(form);
+    }, [ form?._id ]);
 
     const handleDrop = useCallback((item, index) => {
-        const content = compose(
-            reject((control) => control === item),
-            getOr([], 'content')
-        )(localForm);
+        const content = getOr([], 'content', localForm);
         const newContent = [
             ...content.slice(0, index),
             { ...item },
@@ -58,6 +55,14 @@ const FormContent = ({ id }) => {
         setLocalForm(update('content', reject((control) => control === item), localForm));
     }, [ localForm ]);
 
+    const handleDestroyItem = useCallback((item) => {
+        setLocalForm(update(
+            'content',
+            reject((contentItem) => contentItem === item),
+            localForm
+        ));
+    }, [ localForm ]);
+
     const handleSaveForm = useCallback(() => {
         dispatch(saveForm(localForm));
     }, [ localForm ]);
@@ -70,6 +75,7 @@ const FormContent = ({ id }) => {
                 onEdit={() => handleEdit(contentItem)}
                 onRemove={handleRemove}
                 onCopy={handleDrop}
+                onDragEnd={handleDestroyItem}
             />
         </div>)}
         <ContentDropZone index={localForm?.content.length ?? 0} onDrop={handleDrop} />
@@ -110,10 +116,10 @@ const FormContentItemsEdit = ({ item, onSave, onCancel }) => {
             <Col size={6}> { item.type === 'text' ? <>
                 <EditorHeader>Text</EditorHeader>
                 <Input value={editItem.content} onChange={({ target: { value } }) => setEditItem(set('content', value, editItem))} />
-            </> : <>
+            </> : item.type !== 'form' ? <>
                 <EditorHeader>Name</EditorHeader>
                 <Input value={editItem.name} onChange={({ target: { value } }) => setEditItem(set('name', value, editItem))} />
-            </>}
+            </> : null}
             </Col>
             <Col size={6}>
                 <EditorHeader>Label</EditorHeader>

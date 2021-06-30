@@ -7,6 +7,6 @@ export const row = css`
 
 export const col = css`
     padding: 10px;
-    width: ${props => 100/12*props.size}%;
+    ${ props => props.size ? css`width: ${100/12*props.size}%;` : css`flex: 1;`}
     box-sizing: border-box;
 `;

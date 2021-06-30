@@ -1,7 +1,8 @@
 import { put, takeLatest, takeEvery } from 'redux-saga/effects';
 import { App, Credentials } from 'realm-web';
 import { set, omit } from 'lodash/fp';
-import { downloadForms, downloadFormsAction, downloadFormsSuccess, saveFormAction, saveFormSuccess } from '~/actions/forms';
+import { downloadForms, downloadFormsAction, downloadFormsSuccess, saveFormAction } from '~/actions/forms';
+import { push } from 'connected-react-router';
 
 export function* downloadFormsSaga() {
     yield takeLatest(
@@ -37,7 +38,7 @@ export function* saveFormSaga() {
                     yield app.currentUser.mongoClient('mongodb-atlas').db('makeen').collection('forms').updateOne({ _id: form._id }, { $set: omit([ '_id', 'created' ], form) });
                 }
                 yield put(downloadForms());
-                yield put(saveFormSuccess());
+                yield put(push('/'));
             } catch(err) {
                 console.error('Failed to connect database', err);
             }
