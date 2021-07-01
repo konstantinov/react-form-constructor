@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getOr, set, update, reject, compose, findIndex } from 'lodash/fp';
+import { getOr, set, update, reject, findIndex, isArray } from 'lodash/fp';
 import Content from '~/components/blocks/Content';
 import { getForm } from '~/selectors/forms';
 import Dialog from '~/components/blocks/Dialog';
@@ -41,12 +41,36 @@ const FormContent = ({ id }) => {
     });
 
     const handleSave = useCallback((newItem) => {
-        const index = findIndex(editItem, localForm.content);
 
-        setLocalForm(update('content', set(
-            index,
-            newItem,
-        ), localForm));
+        const findPath = (value, content, path = '') => {
+            if (content[0] && isArray(content[0])) {
+                for (const i in content) {
+                    for (const j in content) {
+                        const colResult = findPath(value, content[i][j], path + i + '.' + j + '.');
+                        if (colResult) {
+                            return colResult;
+                        }
+                    }
+                }
+            }
+            const result = findIndex(value, content);
+
+            if (result >= 0) {
+                return path + result;
+            }
+
+            for (const i in content)
+                if (content[i].content) {
+                    const deepResult = findPath(value, content[i].content, path + i + '.content.');
+                    if (deepResult) {
+                        return deepResult;
+                    }
+                }
+        };
+
+        const path = findPath(editItem, localForm.content, 'content.');
+
+        setLocalForm(set(path, newItem, localForm));
         setIsEditVisible(false);
     }, [ editItem, localForm ]);
 

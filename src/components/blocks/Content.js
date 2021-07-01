@@ -10,7 +10,7 @@ const Content = ({ content, onDrop, onDestroy, onEdit, onRemove }) => <>
         <FormContentItem
             item={contentItem}
             index={index}
-            onEdit={() => onEdit(contentItem)}
+            onEdit={onEdit}
             onRemove={onRemove}
             onCopy={onDrop}
             onDragEnd={onDestroy}

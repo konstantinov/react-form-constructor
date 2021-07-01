@@ -5,13 +5,14 @@ import { faArrowsAlt, faCopy, faEdit, faTrash } from '@fortawesome/free-solid-sv
 
 import { EditorText, EditorHeader } from '~/components/atoms/Text';
 import { getForm } from '~/selectors/forms';
-import { Col, Row } from '~/components/atoms/Grid';
+import { TableCol, TableRow, Table } from '~/components/atoms/Grid';
 
 import * as styles from '~/styles/FormContentItem.styles';
 import { TinyButton } from '~/components/atoms/Buttons';
 import { Input, FileInput, Checkbox } from '~/components/atoms/Input';
 import { Divider } from '~/components/atoms/Divider';
 import { useSelector } from 'react-redux';
+import Content from '~/components/blocks/Content';
 
 const TextItem = ({ item }) => <EditorText>{item.content || '(Empty text)'}</EditorText>;
 
@@ -25,11 +26,13 @@ const FormItem = ({ item }) => {
     </>;
 };
 
-const CellLayoutItem = ({ item }) => <>
-    {item.content?.map((row, i) => <Row key={i}>
-        {row.map((col, j) => <Col key={j}>{i} {j}</Col>)}
-    </Row>)}
-</>;
+const CellLayoutItem = ({ item, onEdit }) => <Table>
+    {item.content?.map((row, i) => <TableRow key={i}>
+        {row.map((col, j) => <TableCol key={j}>
+            <Content onEdit={onEdit} content={col} />
+        </TableCol>)}
+    </TableRow>)}
+</Table>;
 
 const FormContentItem = ({ item, index, onRemove, onEdit, onCopy, disabled, onDragEnd }) => {
     const [ canDrag, setCanDrag ] = useState(false);
@@ -61,11 +64,11 @@ const FormContentItem = ({ item, index, onRemove, onEdit, onCopy, disabled, onDr
         <Control item={item} label={item.label} disabled />
     </div>  : <div css={styles.container} ref={drag} onMouseDown={() => setCanDrag(false)}>
         { item.label && item.type !== 'checkbox' && <EditorHeader>{item.label}</EditorHeader>}
-        <Control item={item} label={item.label} disabled />
+        <Control item={item} label={item.label} disabled onEdit={onEdit} />
         <div className="overlay">
             <TinyButton text={<FontAwesomeIcon icon={faArrowsAlt} />} onMouseDown={startDrag} />
             <TinyButton text={<FontAwesomeIcon icon={faCopy} onClick={() => onCopy({ ...item }, index)} />} />
-            { item.type !== 'divider' && <TinyButton text={<FontAwesomeIcon icon={faEdit} onClick={onEdit} />} /> }
+            { item.type !== 'divider' && <TinyButton text={<FontAwesomeIcon icon={faEdit} onClick={() => onEdit(item)} />} /> }
             <TinyButton text={<FontAwesomeIcon icon={faTrash} onClick={() => onRemove(item)} />} />
         </div>
     </div>;
