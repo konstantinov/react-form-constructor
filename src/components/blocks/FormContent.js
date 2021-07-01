@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getOr, set, update, reject, findIndex, isArray } from 'lodash/fp';
+import { getOr, set, update, reject } from 'lodash/fp';
 import Content from '~/components/blocks/Content';
 import { getForm } from '~/selectors/forms';
 import Dialog from '~/components/blocks/Dialog';
@@ -9,6 +9,7 @@ import { EditorHeader } from '~/components/atoms/Text';
 import { BlueButton, PinnedSaveButton } from '~/components/atoms/Buttons';
 import { Input } from '~/components/atoms/Input';
 import { saveForm } from '~/actions/forms';
+import { findPath, insertItem } from '~/utils';
 
 import * as styles from '~/styles/FormContent.styles';
 
@@ -24,73 +25,35 @@ const FormContent = ({ id }) => {
         setLocalForm(form);
     }, [ form?._id ]);
 
-    const handleDrop = useCallback((item, index) => {
+    const handleDrop = useCallback((item, index, replace = false) => {
         const content = getOr([], 'content', localForm);
-        const newContent = [
-            ...content.slice(0, index),
-            { ...item },
-            ...content.slice(index)
-        ];
+        const newContent = insertItem(content, item, index, replace);
 
         setLocalForm(set('content', newContent, localForm));
-    }, [ localForm ]);
+    }, [ localForm, localForm?.content ]);
 
-    const handleEdit = useCallback((item) => {
+    const handleEdit = (item) => {
         setEditItem(item);
         setIsEditVisible(true);
-    });
+    };
 
     const handleSave = useCallback((newItem) => {
-
-        const findPath = (value, content, path = '') => {
-            if (content[0] && isArray(content[0])) {
-                for (const i in content) {
-                    for (const j in content) {
-                        const colResult = findPath(value, content[i][j], path + i + '.' + j + '.');
-                        if (colResult) {
-                            return colResult;
-                        }
-                    }
-                }
-            }
-            const result = findIndex(value, content);
-
-            if (result >= 0) {
-                return path + result;
-            }
-
-            for (const i in content)
-                if (content[i].content) {
-                    const deepResult = findPath(value, content[i].content, path + i + '.content.');
-                    if (deepResult) {
-                        return deepResult;
-                    }
-                }
-        };
-
         const path = findPath(editItem, localForm.content, 'content.');
-
         setLocalForm(set(path, newItem, localForm));
         setIsEditVisible(false);
     }, [ editItem, localForm ]);
 
     const handleRemove = useCallback((item) => {
         setLocalForm(update('content', reject((control) => control === item), localForm));
-    }, [ localForm ]);
+    }, [ localForm, localForm?.content ]);
 
-    const handleDestroyItem = useCallback((item) => {
-        setLocalForm(update(
-            'content',
-            reject((contentItem) => contentItem === item),
-            localForm
-        ));
-    }, [ localForm ]);
+
 
     const handleSaveForm = useCallback(() => {
         dispatch(saveForm(localForm));
     }, [ localForm ]);
     return <div css={styles.container}>
-        { localForm && <Content content={localForm.content} onEdit={handleEdit} onDrop={handleDrop} onRemove={handleRemove} onDestroy={handleDestroyItem} /> }
+        { localForm && <Content content={localForm.content} onEdit={handleEdit} onDrop={handleDrop} onRemove={handleRemove} onDestroy={handleRemove} /> }
         { isEditVisible && (
             <Dialog>
                 <FormContentItemsEdit

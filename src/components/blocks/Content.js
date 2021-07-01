@@ -14,6 +14,7 @@ const Content = ({ content, onDrop, onDestroy, onEdit, onRemove }) => <>
             onRemove={onRemove}
             onCopy={onDrop}
             onDragEnd={onDestroy}
+            onDrop={onDrop}
         />
     </div>)}
     <ContentDropZone index={content.length} onDrop={onDrop} />
